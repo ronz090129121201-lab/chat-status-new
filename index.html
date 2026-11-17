@@ -2,107 +2,138 @@
 <html lang="ms">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CHAT STATUS</title>
 <style>
 *{box-sizing:border-box}
-:root{--green:#00ff91;--red:#ff1744}
 body{
-  margin:0;min-height:100vh;display:grid;place-items:center;
-  background:radial-gradient(circle at 50% 20%,#14251f,#050707 55%,#000);
-  color:#eafff5;font-family:Arial, sans-serif;padding:18px;overflow:hidden
+ margin:0;min-height:100vh;background:#030303;color:white;
+ display:flex;align-items:center;justify-content:center;
+ font-family:Arial,sans-serif;overflow:hidden;
 }
 .phone{
-  width:min(100%,390px);min-height:690px;max-height:92vh;overflow:hidden;
-  border:2px solid #243c32;border-radius:34px;background:#050b09;
-  box-shadow:0 0 28px #00ff9140, inset 0 0 24px #00ff9110;
-  position:relative;padding:22px 18px;display:flex;flex-direction:column
+ width:min(92vw,390px);min-height:680px;padding:25px 20px;
+ border:2px solid #16ff75;border-radius:30px;
+ background:#050505;box-shadow:0 0 25px #00ff66;
+ text-align:center;position:relative;
 }
-.top{display:flex;align-items:center;gap:10px;border-bottom:1px solid #244235;padding-bottom:16px}
-.logo{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;
-  background:#075e54;color:white;font-size:23px;font-weight:bold;box-shadow:0 0 14px #00ff9170}
-.brand{font-weight:800;letter-spacing:2px;color:var(--green);font-size:17px}
-.sub{font-size:10px;color:#8aa99a;letter-spacing:2px;margin-top:4px}
-.screen{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-h1{font-size:22px;letter-spacing:2px;margin:12px 0;color:var(--green);text-shadow:0 0 12px #00ff91}
-#status{font-size:13px;color:#c5d8ce;min-height:42px;line-height:1.5}
-.ring{width:158px;height:158px;border:2px solid #164b36;border-radius:50%;display:grid;place-items:center;
-  margin:20px auto;position:relative;box-shadow:0 0 20px #00ff9130}
-.ring:before{content:"";position:absolute;inset:9px;border:2px dashed var(--green);border-radius:50%;animation:spin 5s linear infinite}
-#percent{font-size:35px;font-weight:bold;color:var(--green);text-shadow:0 0 15px #00ff91}
-.bar{height:9px;width:100%;background:#14231c;border-radius:20px;overflow:hidden;margin:8px 0 18px}
-#fill{height:100%;width:0;background:linear-gradient(90deg,var(--red),var(--green));box-shadow:0 0 12px var(--green);transition:width .2s}
-button{border:1px solid var(--green);background:#062418;color:var(--green);font-weight:bold;letter-spacing:2px;
-  padding:15px 24px;border-radius:12px;width:100%;cursor:pointer;box-shadow:0 0 15px #00ff9130}
-button:disabled{opacity:.5;cursor:default}
-.note{font-size:10px;color:#6f8d7d;line-height:1.5;margin-top:18px}
-.glitch{animation:glitch .18s steps(2) infinite}
-.flash{animation:flash .35s steps(2) infinite}
-#reveal{display:none;color:#fff;font-size:25px;font-weight:900;line-height:1.4;text-shadow:0 0 18px var(--green)}
-#reveal small{display:block;font-size:13px;color:var(--green);margin-top:14px}
+.logo{
+ width:65px;height:65px;border:3px solid #00ff72;
+ border-radius:50%;margin:5px auto 15px;
+ display:grid;place-items:center;font-size:32px;
+ color:#00ff72;box-shadow:0 0 18px #00ff72;
+}
+h1{font-size:22px;letter-spacing:3px;color:#00ff72}
+#status{font-size:13px;min-height:45px;color:#ddd}
+.ring{
+ width:155px;height:155px;border:3px dashed #00ff72;
+ border-radius:50%;margin:25px auto;
+ display:grid;place-items:center;
+ animation:spin 4s linear infinite;
+}
+#percent{font-size:32px;font-weight:bold}
+.bar{height:10px;background:#222;border-radius:20px;overflow:hidden}
+#fill{height:100%;width:0;background:linear-gradient(90deg,red,#00ff72)}
+button{
+ width:100%;padding:16px;margin-top:25px;
+ background:#061b0d;color:#00ff72;
+ border:2px solid #00ff72;border-radius:12px;
+ font-weight:bold;letter-spacing:3px;font-size:15px;
+}
+.note{font-size:10px;color:#888;margin-top:25px}
+.red{border-color:red!important;box-shadow:0 0 25px red!important}
+.glitch{animation:shake .12s infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-@keyframes flash{50%{background:#21070c}}
-@keyframes glitch{0%{transform:translate(0)}25%{transform:translate(2px,-1px)}50%{transform:translate(-2px,1px)}75%{transform:translate(1px,2px)}}
-@media(max-height:740px){.phone{min-height:0;height:92vh}.ring{width:130px;height:130px}}
+@keyframes shake{
+ 0%{transform:translate(0)}
+ 25%{transform:translate(3px,-2px)}
+ 50%{transform:translate(-3px,2px)}
+ 75%{transform:translate(2px,2px)}
+}
+#ending{display:none;font-size:27px;font-weight:900;
+ color:red;text-shadow:0 0 18px red;margin-top:100px}
+#ending small{display:block;color:white;font-size:13px;margin-top:20px}
 </style>
 </head>
 <body>
-<main class="phone" id="phone">
-  <header class="top">
-    <div class="logo">●</div>
-    <div><div class="brand">CHAT STATUS</div><div class="sub">VISUAL EFFECTS TERMINAL</div></div>
-  </header>
-  <section class="screen">
-    <div id="main">
-      <h1>CONNECTION CHECK</h1>
-      <p id="status">Tekan MULA untuk menjalankan simulasi visual.</p>
-      <div class="ring"><div id="percent">READY</div></div>
-      <div class="bar"><div id="fill"></div></div>
-      <button id="start">MULA</button>
-      <p class="note">Simulasi visual sahaja. Tiada akaun, nombor telefon atau mesej diakses.</p>
-    </div>
-    <div id="reveal">KENA PRANK!<small>Ini cuma simulasi visual 😄<br>Tiada apa-apa berlaku pada akaun awak.</small></div>
-  </section>
-</main>
+<div class="phone" id="phone">
+ <div id="main">
+  <div class="logo">●</div>
+  <h1>CHAT STATUS</h1>
+  <p id="status">SISTEM SEDIA</p>
+  <div class="ring"><span id="percent">READY</span></div>
+  <div class="bar"><div id="fill"></div></div>
+  <button id="start">MULA</button>
+  <p class="note">SIMULASI VISUAL PRANK SAHAJA</p>
+ </div>
+ <div id="ending">
+  APA KAU TUNGGU?!
+  <small>KENA PRANK! 😂<br>Tiada akaun atau mesej diakses.</small>
+ </div>
+</div>
+
 <script>
-const start=document.getElementById('start'),statusText=document.getElementById('status');
-const percent=document.getElementById('percent'),fill=document.getElementById('fill');
-const phone=document.getElementById('phone');
-let audioCtx;
-function beep(freq=440,duration=.09){
-  try{
-    audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();
-    const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();
-    osc.type='square';osc.frequency.value=freq;gain.gain.value=.035;
-    osc.connect(gain);gain.connect(audioCtx.destination);
-    osc.start();osc.stop(audioCtx.currentTime+duration);
-  }catch(e){}
+const phone=document.getElementById("phone");
+const statusText=document.getElementById("status");
+const percent=document.getElementById("percent");
+const fill=document.getElementById("fill");
+const start=document.getElementById("start");
+
+let audio;
+function beep(freq,duration){
+ try{
+  audio=audio||new AudioContext();
+  let o=audio.createOscillator();
+  let g=audio.createGain();
+  o.type="square";
+  o.frequency.value=freq;
+  g.gain.value=.04;
+  o.connect(g);g.connect(audio.destination);
+  o.start();o.stop(audio.currentTime+duration);
+ }catch(e){}
 }
+
 const messages=[
- 'Memulakan sambungan simulasi...',
- 'Memeriksa paparan antara muka...',
- 'Menyediakan kesan visual...',
- 'Menjana corak isyarat...',
- 'Menyelesaikan simulasi...'
+ "MEMULAKAN SIMULASI...",
+ "CHECKING VISUAL SYSTEM...",
+ "CONNECTION ERROR...",
+ "SYSTEM WARNING...",
+ "CRITICAL ERROR...",
+ "FINALIZING..."
 ];
-start.addEventListener('click',()=>{
-  start.disabled=true;start.textContent='SEDANG BERJALAN';
-  let elapsed=0;const total=30;
-  const timer=setInterval(()=>{
-    elapsed++;
-    const p=Math.min(100,Math.round(elapsed/total*100));
-    percent.textContent=p+'%';fill.style.width=p+'%';
-    statusText.textContent=messages[Math.min(messages.length-1,Math.floor(elapsed/6))];
-    if(elapsed%2===0)beep(300+Math.random()*650,.06);
-    if(elapsed>20){phone.classList.add('glitch');if(elapsed%2===0)phone.classList.toggle('flash')}
-    if(elapsed>=total){
-      clearInterval(timer);phone.classList.remove('glitch','flash');
-      document.getElementById('main').style.display='none';
-      document.getElementById('reveal').style.display='block';
-      beep(740,.18);setTimeout(()=>beep(980,.22),180);
-    }
-  },1000);
-});
+
+start.onclick=()=>{
+ start.disabled=true;
+ start.textContent="PLEASE WAIT...";
+ let seconds=0;
+
+ let timer=setInterval(()=>{
+  seconds++;
+  let p=Math.round(seconds/30*100);
+  percent.textContent=p+"%";
+  fill.style.width=p+"%";
+
+  statusText.textContent=messages[
+   Math.min(messages.length-1,Math.floor(seconds/5))
+  ];
+
+  if(seconds%2===0)beep(350+Math.random()*700,.08);
+
+  if(seconds>=20){
+   phone.classList.toggle("red");
+   phone.classList.add("glitch");
+  }
+
+  if(seconds>=30){
+   clearInterval(timer);
+   document.getElementById("main").style.display="none";
+   document.getElementById("ending").style.display="block";
+   phone.classList.remove("glitch");
+   phone.classList.add("red");
+   beep(850,.3);
+  }
+ },1000);
+};
 </script>
 </body>
 </html>
