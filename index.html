@@ -2,227 +2,482 @@
 <html lang="ms">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Security Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHAT STATUS</title>
+
 <style>
 *{box-sizing:border-box}
+
+:root{
+ --green:#00ff55;
+ --red:#ff2020;
+}
+
 body{
- margin:0;padding:18px;background:#02070d;
- color:#eafff7;font-family:Arial,sans-serif
+ margin:0;
+ min-height:100vh;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ padding:12px;
+ background:#000;
+ color:white;
+ font-family:Arial,sans-serif;
 }
-.container{
- max-width:440px;margin:20px auto;padding:20px;
- background:#081722;border:1px solid #00c982;
- border-radius:18px;
- box-shadow:0 0 25px #00ff8840;
+
+.phone{
+ width:100%;
+ max-width:390px;
+ height:min(850px,96vh);
+ min-height:650px;
+ overflow:hidden;
+ position:relative;
+ padding:22px 17px;
+ border:3px solid var(--green);
+ border-radius:25px;
+ background:
+ radial-gradient(ellipse at top,#063d19,transparent 55%),
+ repeating-linear-gradient(0deg,rgba(0,255,80,.05) 0 1px,transparent 1px 4px),
+ #010301;
+ box-shadow:0 0 15px var(--green),inset 0 0 30px #003b18;
 }
-h1{text-align:center;color:#00ff9d;letter-spacing:3px}
-h2{font-size:16px;color:#00ff9d}
-.small{text-align:center;color:#7fa99b;font-size:12px}
-.card{
- background:#102a32;padding:15px;margin:12px 0;
- border-radius:10px;border:1px solid #174a43
+
+.content{position:relative;z-index:2}
+
+.logo{
+ width:75px;
+ height:75px;
+ display:block;
+ margin:5px auto;
+ filter:drop-shadow(0 0 12px var(--green));
 }
-.dashboard{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.number{font-size:25px;color:#00ff9d;font-weight:bold;margin:8px 0}
-.bar{height:7px;background:#18352e;border-radius:10px;overflow:hidden}
-.fill{height:100%;width:0;background:#00ff9d;transition:width .4s}
-.tabs{display:flex;gap:8px;margin:18px 0}
+
+.brand{
+ text-align:center;
+ color:var(--green);
+ font-size:25px;
+ font-weight:bold;
+ text-shadow:0 0 12px var(--green);
+}
+
+.demo{
+ text-align:center;
+ font-size:9px;
+ color:#a9c5af;
+ letter-spacing:1.5px;
+ margin-top:5px;
+}
+
+h1{
+ text-align:center;
+ color:var(--green);
+ font-size:36px;
+ letter-spacing:4px;
+ text-shadow:0 0 15px var(--green);
+ margin:17px 0;
+}
+
+.status{
+ text-align:center;
+ color:var(--red);
+ font-weight:bold;
+ letter-spacing:3px;
+ font-size:14px;
+ margin:12px 0;
+}
+
+.intro{
+ text-align:center;
+ color:var(--green);
+ font-size:14px;
+}
+
+.timer{
+ text-align:center;
+ color:var(--red);
+ font-size:58px;
+ font-weight:900;
+ text-shadow:0 0 15px red;
+}
+
+.bar{
+ height:14px;
+ border:2px solid var(--green);
+ border-radius:8px;
+ padding:2px;
+ box-shadow:0 0 10px var(--green);
+}
+
+.fill{
+ height:100%;
+ width:0%;
+ background:linear-gradient(90deg,red,#ffb000,var(--green));
+ transition:width .2s;
+}
+
+.percent{text-align:center;margin:8px}
+
+.label{
+ text-align:center;
+ color:var(--red);
+ font-size:18px;
+ font-weight:bold;
+ margin:16px 0 12px;
+}
+
+input{
+ width:100%;
+ height:55px;
+ background:#001006;
+ border:2px solid var(--green);
+ border-radius:9px;
+ color:white;
+ text-align:center;
+ font-size:20px;
+ outline:none;
+}
+
+input::placeholder{color:#77877c}
+
 button{
- border:0;border-radius:8px;padding:13px;
- font-weight:bold;cursor:pointer
+ display:block;
+ margin:14px auto;
+ padding:12px 30px;
+ background:#001407;
+ color:var(--green);
+ border:2px solid var(--green);
+ border-radius:9px;
+ font-size:19px;
+ font-weight:bold;
+ letter-spacing:2px;
+ box-shadow:0 0 14px var(--green);
 }
-.tabs button{flex:1;background:#18352e;color:white}
-.tabs button.active{background:#00e890;color:#001b12}
-.item{
- display:flex;align-items:center;gap:10px;
- padding:13px;margin:9px 0;background:#102a32;
- border-radius:9px
+
+.terminal{
+ height:125px;
+ overflow:auto;
+ padding:10px;
+ border:1px solid #00b94b;
+ background:rgba(0,15,5,.9);
+ color:var(--green);
+ font-family:monospace;
+ font-size:11px;
+ line-height:1.55;
+ white-space:pre-wrap;
 }
-input{width:20px;height:20px;accent-color:#00ff9d}
-.start{
- width:100%;margin-top:12px;
- background:#00e890;color:#001b12
+
+.note{
+ text-align:center;
+ color:#aaa;
+ font-size:9px;
+ margin-top:10px;
 }
-#status{
- margin-top:15px;padding:14px;text-align:center;
- background:#06120f;border:1px solid #176b54;
- border-radius:9px;line-height:1.7
+
+.hidden{display:none!important}
+
+.shake{animation:shake .15s linear 4}
+.flash{animation:flash .2s steps(2) 4}
+
+@keyframes shake{
+ 0%,100%{transform:translate(0)}
+ 25%{transform:translate(5px,-3px)}
+ 50%{transform:translate(-5px,3px)}
+ 75%{transform:translate(4px,2px)}
 }
-#scan{
- display:none;text-align:center;color:#00ff9d;
- margin:18px 0;animation:blink .5s infinite alternate
+
+@keyframes flash{
+ 50%{filter:brightness(2.5) hue-rotate(100deg)}
 }
-.scanline{
- height:4px;background:#00ff9d;
- box-shadow:0 0 15px #00ff9d;
- margin-top:12px;display:none;
- animation:move 1s infinite alternate
+
+.glitch{
+ position:absolute;
+ height:5px;
+ width:90px;
+ background:var(--green);
+ box-shadow:0 0 12px var(--green);
+ animation:move 1.5s infinite alternate;
 }
-@keyframes blink{
- from{opacity:.3}
- to{opacity:1;text-shadow:0 0 12px #00ff9d}
-}
+
+.g1{top:25%;left:0}
+.g2{top:43%;right:0;background:red}
+.g3{top:65%;left:0;background:red}
+.g4{top:82%;right:0}
+
 @keyframes move{
- from{transform:scaleX(.2)}
- to{transform:scaleX(1)}
+ from{transform:translateX(-10px)}
+ to{transform:translateX(15px)}
+}
+
+.cracked:after{
+ content:"";
+ position:absolute;
+ inset:0;
+ z-index:5;
+ pointer-events:none;
+ background:
+ linear-gradient(125deg,transparent 48%,white 48.2%,transparent 48.7%),
+ linear-gradient(35deg,transparent 56%,white 56.2%,transparent 56.7%),
+ linear-gradient(165deg,transparent 32%,white 32.2%,transparent 32.6%),
+ linear-gradient(75deg,transparent 70%,white 70.2%,transparent 70.6%),
+ linear-gradient(210deg,transparent 22%,white 22.2%,transparent 22.5%);
+}
+
+.reveal{
+ text-align:center;
+ font-size:23px;
+ font-weight:bold;
+ color:white;
+ text-shadow:0 0 15px red;
 }
 </style>
 </head>
+
 <body>
-<div class="container">
 
-<h1>SECURITY DASHBOARD</h1>
-<p class="small">LOCAL SECURITY REVIEW</p>
+<main class="phone" id="phone">
 
-<h2>DASHBOARD UTAMA</h2>
+<div class="glitch g1"></div>
+<div class="glitch g2"></div>
+<div class="glitch g3"></div>
+<div class="glitch g4"></div>
 
-<div class="dashboard">
- <div class="card">
-  PROFIL 1
-  <div class="number" id="count1">0/5</div>
-  <div class="bar"><div class="fill" id="bar1"></div></div>
- </div>
- <div class="card">
-  PROFIL 2
-  <div class="number" id="count2">0/5</div>
-  <div class="bar"><div class="fill" id="bar2"></div></div>
- </div>
+<div class="content">
+
+<!-- IKON WHATSAPP BERGAYA RASMI -->
+<svg class="logo" viewBox="0 0 100 100">
+ <circle cx="50" cy="48" r="39"
+ fill="none" stroke="#00ff55" stroke-width="6"/>
+ <path d="M18 77L12 91L34 85"
+ fill="none" stroke="#00ff55" stroke-width="6"
+ stroke-linejoin="round"/>
+ <path d="M37 28c-4 2-7 8-5 14
+ 5 15 17 26 32 31
+ 6 2 12-2 14-7l-11-8-7 6
+ c-8-3-15-10-18-18l6-6-7-12Z"
+ fill="#00ff55"/>
+</svg>
+
+<div class="brand">WhatsApp</div>
+<div class="demo">PROJEK DEMO TIDAK RASMI</div>
+
+<h1>CHAT STATUS</h1>
+
+<div class="status" id="status">
+● SYSTEM INITIALIZING ●
 </div>
 
-<div class="card">
- JUMLAH KESELURUHAN
- <div class="number" id="total">0/10</div>
- <div id="overall">BELUM LENGKAP</div>
-</div>
-
-<div class="tabs">
- <button id="tab1" class="active" onclick="pilih(1)">PROFIL 1</button>
- <button id="tab2" onclick="pilih(2)">PROFIL 2</button>
-</div>
-
-<h2 id="title">SEMAKAN PROFIL 1</h2>
-<div id="checks"></div>
-
-<button class="start" onclick="semak()">MULA IMBASAN</button>
-
-<div id="scan">
- SEDANG MENJALANKAN IMBASAN...
- <div class="scanline" id="scanline"></div>
-</div>
-
-<div class="bar" style="margin-top:15px">
- <div class="fill" id="progress"></div>
-</div>
-
-<div id="status">MENUNGGU SEMAKAN</div>
-
-<p class="small">
-Simulasi visual dan panduan keselamatan sahaja.
-Tidak mengakses WhatsApp atau membaca mesej.
+<p class="intro" id="intro">
+Paparan demonstrasi sedang dimulakan.
 </p>
+
+<div class="timer" id="timer">10</div>
+
+<div class="bar">
+ <div class="fill" id="fill"></div>
 </div>
+
+<div class="percent" id="percent">0%</div>
+
+<section id="entry" class="hidden">
+
+ <div class="label">MASUKKAN NOMBOR DEMO</div>
+
+ <input
+ id="number"
+ type="tel"
+ inputmode="numeric"
+ maxlength="11"
+ placeholder="Nombor demo sahaja"
+ autocomplete="off">
+
+ <button id="go">TERUSKAN</button>
+
+</section>
+
+<div class="terminal" id="terminal">> SYSTEM BOOT...
+> INITIALIZING INTERFACE...
+> CHECKING DISPLAY...
+> WAITING FOR INPUT...</div>
+
+<div class="reveal hidden" id="reveal">
+INI HANYA DEMO VISUAL
+</div>
+
+<p class="note">
+Demo tidak rasmi. Input tidak dihantar atau disimpan.
+</p>
+
+</div>
+</main>
 
 <script>
-const perkara=[
- "Pengesahan dua langkah diaktifkan.",
- "Peranti dipautkan diperiksa.",
- "Telefon mempunyai kunci skrin.",
- "E-mel pemulihan dilindungi.",
- "Kod OTP tidak dikongsi."
-];
+const $=id=>document.getElementById(id);
 
-let aktif=1;
-let sedang=false;
-let data={1:Array(5).fill(false),2:Array(5).fill(false)};
+const phone=$('phone');
+const timer=$('timer');
+const fill=$('fill');
+const percent=$('percent');
+const terminal=$('terminal');
 
-try{
- const saved=JSON.parse(localStorage.getItem("securityData"));
- if(saved && saved[1] && saved[2])data=saved;
-}catch(e){}
+let audioCtx;
 
-function simpan(){
- localStorage.setItem("securityData",JSON.stringify(data));
+function beep(freq=850,duration=.16){
+ try{
+  audioCtx=audioCtx||new(
+   window.AudioContext||window.webkitAudioContext
+  )();
+
+  if(audioCtx.state==='suspended')audioCtx.resume();
+
+  const o=audioCtx.createOscillator();
+  const g=audioCtx.createGain();
+
+  o.type='square';
+  o.frequency.value=freq;
+  g.gain.value=.06;
+
+  o.connect(g);
+  g.connect(audioCtx.destination);
+
+  o.start();
+  o.stop(audioCtx.currentTime+duration);
+ }catch(e){}
 }
 
-function jumlah(n){
- return data[n].filter(Boolean).length;
+function buzz(){
+ if(navigator.vibrate){
+  navigator.vibrate([150,60,200,60,150]);
+ }
 }
 
-function dashboard(){
- [1,2].forEach(n=>{
-  document.getElementById("count"+n).textContent=jumlah(n)+"/5";
-  document.getElementById("bar"+n).style.width=(jumlah(n)*20)+"%";
- });
- let total=jumlah(1)+jumlah(2);
- document.getElementById("total").textContent=total+"/10";
- document.getElementById("overall").textContent=
- total===10?"SEMUA SEMAKAN LENGKAP":"SEMAKAN BELUM LENGKAP";
+function log(message){
+ terminal.textContent+='\n> '+message;
+ terminal.scrollTop=terminal.scrollHeight;
 }
 
-function papar(){
- document.getElementById("title").textContent="SEMAKAN PROFIL "+aktif;
- document.getElementById("tab1").className=aktif===1?"active":"";
- document.getElementById("tab2").className=aktif===2?"active":"";
+/* LOADING 10 SAAT */
 
- document.getElementById("checks").innerHTML=perkara.map((p,i)=>
- `<div class="item">
- <input type="checkbox" ${data[aktif][i]?"checked":""}
- onchange="ubah(${i},this.checked)">
- <span>${p}</span>
- </div>`).join("");
+let first=10;
 
- document.getElementById("status").textContent="MENUNGGU SEMAKAN";
- document.getElementById("progress").style.width="0%";
-}
+const firstRun=setInterval(()=>{
 
-function ubah(i,value){
- data[aktif][i]=value;
- simpan();
- dashboard();
-}
+ first--;
 
-function pilih(n){
- if(sedang)return;
- aktif=n;
- papar();
-}
+ timer.textContent=first;
+ fill.style.width=((10-first)*10)+'%';
+ percent.textContent=((10-first)*10)+'%';
 
-function semak(){
- if(sedang)return;
- sedang=true;
+ if(first<=0){
 
- let j=jumlah(aktif);
- let p=0;
+  clearInterval(firstRun);
 
- const scan=document.getElementById("scan");
- const line=document.getElementById("scanline");
- const progress=document.getElementById("progress");
- const status=document.getElementById("status");
+  $('status').textContent='● INPUT REQUIRED ●';
+  $('intro').textContent='Masukkan input demo untuk meneruskan.';
 
- scan.style.display="block";
- line.style.display="block";
- status.textContent="IMBASAN SEDANG BERJALAN...";
+  $('entry').classList.remove('hidden');
 
- const timer=setInterval(()=>{
-  p+=5;
-  progress.style.width=p+"%";
+  timer.textContent='00';
+  fill.style.width='100%';
+  percent.textContent='100%';
 
-  if(p>=100){
-   clearInterval(timer);
-   sedang=false;
-   scan.style.display="none";
-   line.style.display="none";
+  log('WAITING FOR DEMO INPUT');
+ }
 
-   status.innerHTML=j===5
-   ?"✓ PROFIL "+aktif+" SELESAI<br>5/5 DIPERIKSA"
-   :"PROFIL "+aktif+" BELUM LENGKAP<br>"+j+"/5 DIPERIKSA";
+},1000);
+
+
+/* LOADING 30 SAAT */
+
+$('go').addEventListener('click',()=>{
+
+ const digits=$('number').value.replace(/\D/g,'');
+
+ if(digits.length<10||digits.length>11){
+
+  $('status').textContent='● INPUT FORMAT ERROR ●';
+
+  log('INPUT FORMAT ERROR');
+
+  beep(250,.25);
+  buzz();
+
+  $('number').focus();
+  return;
+ }
+
+ $('entry').classList.add('hidden');
+
+ $('status').textContent='● SYSTEM PROCESSING ●';
+ $('intro').textContent='Visual sequence sedang berjalan...';
+
+ let remaining=30;
+ let step=0;
+
+ timer.textContent=30;
+ fill.style.width='0%';
+ percent.textContent='0%';
+
+ log('DEMO INPUT ACCEPTED');
+
+ const errors=[
+  'CHECKING DISPLAY RESPONSE...',
+  'WARNING: SIGNAL UNSTABLE',
+  'ERROR 04: DISPLAY SYNC LOST',
+  'RETRYING VISUAL CONNECTION...',
+  'SYSTEM ALERT: BUFFER OVERLOAD',
+  'ERROR 12: VISUAL RESPONSE FAILED',
+  'WARNING: FRAME INSTABILITY',
+  'CRITICAL VISUAL GLITCH DETECTED',
+  'REBUILDING INTERFACE...',
+  'FINALIZING DISPLAY SEQUENCE...'
+ ];
+
+ const run=setInterval(()=>{
+
+  remaining--;
+
+  timer.textContent=remaining;
+
+  fill.style.width=((30-remaining)/30*100)+'%';
+  percent.textContent=Math.round((30-remaining)/30*100)+'%';
+
+  if(remaining%2===0){
+
+   log(errors[step%errors.length]);
+   step++;
+
+   phone.classList.remove('shake','flash');
+   void phone.offsetWidth;
+
+   phone.classList.add('shake','flash');
+
+   beep(500+Math.random()*1000,.18);
+   buzz();
   }
- },100);
-}
 
-papar();
-dashboard();
+  if(remaining<=0){
+
+   clearInterval(run);
+
+   phone.classList.add('cracked');
+
+   $('status').textContent='● SEQUENCE COMPLETE ●';
+   $('intro').textContent='Paparan demonstrasi selesai.';
+
+   $('reveal').classList.remove('hidden');
+
+   timer.textContent='00';
+
+   log('DEMO COMPLETE');
+   log('NO ACCOUNT CONNECTED');
+
+   beep(350,.4);
+  }
+
+ },1000);
+
+});
 </script>
+
 </body>
 </html>
