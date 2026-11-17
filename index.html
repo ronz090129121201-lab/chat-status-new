@@ -2,138 +2,227 @@
 <html lang="ms">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CHAT STATUS</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Security Dashboard</title>
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;min-height:100vh;background:#030303;color:white;
- display:flex;align-items:center;justify-content:center;
- font-family:Arial,sans-serif;overflow:hidden;
+ margin:0;padding:18px;background:#02070d;
+ color:#eafff7;font-family:Arial,sans-serif
 }
-.phone{
- width:min(92vw,390px);min-height:680px;padding:25px 20px;
- border:2px solid #16ff75;border-radius:30px;
- background:#050505;box-shadow:0 0 25px #00ff66;
- text-align:center;position:relative;
+.container{
+ max-width:440px;margin:20px auto;padding:20px;
+ background:#081722;border:1px solid #00c982;
+ border-radius:18px;
+ box-shadow:0 0 25px #00ff8840;
 }
-.logo{
- width:65px;height:65px;border:3px solid #00ff72;
- border-radius:50%;margin:5px auto 15px;
- display:grid;place-items:center;font-size:32px;
- color:#00ff72;box-shadow:0 0 18px #00ff72;
+h1{text-align:center;color:#00ff9d;letter-spacing:3px}
+h2{font-size:16px;color:#00ff9d}
+.small{text-align:center;color:#7fa99b;font-size:12px}
+.card{
+ background:#102a32;padding:15px;margin:12px 0;
+ border-radius:10px;border:1px solid #174a43
 }
-h1{font-size:22px;letter-spacing:3px;color:#00ff72}
-#status{font-size:13px;min-height:45px;color:#ddd}
-.ring{
- width:155px;height:155px;border:3px dashed #00ff72;
- border-radius:50%;margin:25px auto;
- display:grid;place-items:center;
- animation:spin 4s linear infinite;
-}
-#percent{font-size:32px;font-weight:bold}
-.bar{height:10px;background:#222;border-radius:20px;overflow:hidden}
-#fill{height:100%;width:0;background:linear-gradient(90deg,red,#00ff72)}
+.dashboard{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.number{font-size:25px;color:#00ff9d;font-weight:bold;margin:8px 0}
+.bar{height:7px;background:#18352e;border-radius:10px;overflow:hidden}
+.fill{height:100%;width:0;background:#00ff9d;transition:width .4s}
+.tabs{display:flex;gap:8px;margin:18px 0}
 button{
- width:100%;padding:16px;margin-top:25px;
- background:#061b0d;color:#00ff72;
- border:2px solid #00ff72;border-radius:12px;
- font-weight:bold;letter-spacing:3px;font-size:15px;
+ border:0;border-radius:8px;padding:13px;
+ font-weight:bold;cursor:pointer
 }
-.note{font-size:10px;color:#888;margin-top:25px}
-.red{border-color:red!important;box-shadow:0 0 25px red!important}
-.glitch{animation:shake .12s infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-@keyframes shake{
- 0%{transform:translate(0)}
- 25%{transform:translate(3px,-2px)}
- 50%{transform:translate(-3px,2px)}
- 75%{transform:translate(2px,2px)}
+.tabs button{flex:1;background:#18352e;color:white}
+.tabs button.active{background:#00e890;color:#001b12}
+.item{
+ display:flex;align-items:center;gap:10px;
+ padding:13px;margin:9px 0;background:#102a32;
+ border-radius:9px
 }
-#ending{display:none;font-size:27px;font-weight:900;
- color:red;text-shadow:0 0 18px red;margin-top:100px}
-#ending small{display:block;color:white;font-size:13px;margin-top:20px}
+input{width:20px;height:20px;accent-color:#00ff9d}
+.start{
+ width:100%;margin-top:12px;
+ background:#00e890;color:#001b12
+}
+#status{
+ margin-top:15px;padding:14px;text-align:center;
+ background:#06120f;border:1px solid #176b54;
+ border-radius:9px;line-height:1.7
+}
+#scan{
+ display:none;text-align:center;color:#00ff9d;
+ margin:18px 0;animation:blink .5s infinite alternate
+}
+.scanline{
+ height:4px;background:#00ff9d;
+ box-shadow:0 0 15px #00ff9d;
+ margin-top:12px;display:none;
+ animation:move 1s infinite alternate
+}
+@keyframes blink{
+ from{opacity:.3}
+ to{opacity:1;text-shadow:0 0 12px #00ff9d}
+}
+@keyframes move{
+ from{transform:scaleX(.2)}
+ to{transform:scaleX(1)}
+}
 </style>
 </head>
 <body>
-<div class="phone" id="phone">
- <div id="main">
-  <div class="logo">●</div>
-  <h1>CHAT STATUS</h1>
-  <p id="status">SISTEM SEDIA</p>
-  <div class="ring"><span id="percent">READY</span></div>
-  <div class="bar"><div id="fill"></div></div>
-  <button id="start">MULA</button>
-  <p class="note">SIMULASI VISUAL PRANK SAHAJA</p>
+<div class="container">
+
+<h1>SECURITY DASHBOARD</h1>
+<p class="small">LOCAL SECURITY REVIEW</p>
+
+<h2>DASHBOARD UTAMA</h2>
+
+<div class="dashboard">
+ <div class="card">
+  PROFIL 1
+  <div class="number" id="count1">0/5</div>
+  <div class="bar"><div class="fill" id="bar1"></div></div>
  </div>
- <div id="ending">
-  APA KAU TUNGGU?!
-  <small>KENA PRANK! 😂<br>Tiada akaun atau mesej diakses.</small>
+ <div class="card">
+  PROFIL 2
+  <div class="number" id="count2">0/5</div>
+  <div class="bar"><div class="fill" id="bar2"></div></div>
  </div>
 </div>
 
+<div class="card">
+ JUMLAH KESELURUHAN
+ <div class="number" id="total">0/10</div>
+ <div id="overall">BELUM LENGKAP</div>
+</div>
+
+<div class="tabs">
+ <button id="tab1" class="active" onclick="pilih(1)">PROFIL 1</button>
+ <button id="tab2" onclick="pilih(2)">PROFIL 2</button>
+</div>
+
+<h2 id="title">SEMAKAN PROFIL 1</h2>
+<div id="checks"></div>
+
+<button class="start" onclick="semak()">MULA IMBASAN</button>
+
+<div id="scan">
+ SEDANG MENJALANKAN IMBASAN...
+ <div class="scanline" id="scanline"></div>
+</div>
+
+<div class="bar" style="margin-top:15px">
+ <div class="fill" id="progress"></div>
+</div>
+
+<div id="status">MENUNGGU SEMAKAN</div>
+
+<p class="small">
+Simulasi visual dan panduan keselamatan sahaja.
+Tidak mengakses WhatsApp atau membaca mesej.
+</p>
+</div>
+
 <script>
-const phone=document.getElementById("phone");
-const statusText=document.getElementById("status");
-const percent=document.getElementById("percent");
-const fill=document.getElementById("fill");
-const start=document.getElementById("start");
-
-let audio;
-function beep(freq,duration){
- try{
-  audio=audio||new AudioContext();
-  let o=audio.createOscillator();
-  let g=audio.createGain();
-  o.type="square";
-  o.frequency.value=freq;
-  g.gain.value=.04;
-  o.connect(g);g.connect(audio.destination);
-  o.start();o.stop(audio.currentTime+duration);
- }catch(e){}
-}
-
-const messages=[
- "MEMULAKAN SIMULASI...",
- "CHECKING VISUAL SYSTEM...",
- "CONNECTION ERROR...",
- "SYSTEM WARNING...",
- "CRITICAL ERROR...",
- "FINALIZING..."
+const perkara=[
+ "Pengesahan dua langkah diaktifkan.",
+ "Peranti dipautkan diperiksa.",
+ "Telefon mempunyai kunci skrin.",
+ "E-mel pemulihan dilindungi.",
+ "Kod OTP tidak dikongsi."
 ];
 
-start.onclick=()=>{
- start.disabled=true;
- start.textContent="PLEASE WAIT...";
- let seconds=0;
+let aktif=1;
+let sedang=false;
+let data={1:Array(5).fill(false),2:Array(5).fill(false)};
 
- let timer=setInterval(()=>{
-  seconds++;
-  let p=Math.round(seconds/30*100);
-  percent.textContent=p+"%";
-  fill.style.width=p+"%";
+try{
+ const saved=JSON.parse(localStorage.getItem("securityData"));
+ if(saved && saved[1] && saved[2])data=saved;
+}catch(e){}
 
-  statusText.textContent=messages[
-   Math.min(messages.length-1,Math.floor(seconds/5))
-  ];
+function simpan(){
+ localStorage.setItem("securityData",JSON.stringify(data));
+}
 
-  if(seconds%2===0)beep(350+Math.random()*700,.08);
+function jumlah(n){
+ return data[n].filter(Boolean).length;
+}
 
-  if(seconds>=20){
-   phone.classList.toggle("red");
-   phone.classList.add("glitch");
-  }
+function dashboard(){
+ [1,2].forEach(n=>{
+  document.getElementById("count"+n).textContent=jumlah(n)+"/5";
+  document.getElementById("bar"+n).style.width=(jumlah(n)*20)+"%";
+ });
+ let total=jumlah(1)+jumlah(2);
+ document.getElementById("total").textContent=total+"/10";
+ document.getElementById("overall").textContent=
+ total===10?"SEMUA SEMAKAN LENGKAP":"SEMAKAN BELUM LENGKAP";
+}
 
-  if(seconds>=30){
+function papar(){
+ document.getElementById("title").textContent="SEMAKAN PROFIL "+aktif;
+ document.getElementById("tab1").className=aktif===1?"active":"";
+ document.getElementById("tab2").className=aktif===2?"active":"";
+
+ document.getElementById("checks").innerHTML=perkara.map((p,i)=>
+ `<div class="item">
+ <input type="checkbox" ${data[aktif][i]?"checked":""}
+ onchange="ubah(${i},this.checked)">
+ <span>${p}</span>
+ </div>`).join("");
+
+ document.getElementById("status").textContent="MENUNGGU SEMAKAN";
+ document.getElementById("progress").style.width="0%";
+}
+
+function ubah(i,value){
+ data[aktif][i]=value;
+ simpan();
+ dashboard();
+}
+
+function pilih(n){
+ if(sedang)return;
+ aktif=n;
+ papar();
+}
+
+function semak(){
+ if(sedang)return;
+ sedang=true;
+
+ let j=jumlah(aktif);
+ let p=0;
+
+ const scan=document.getElementById("scan");
+ const line=document.getElementById("scanline");
+ const progress=document.getElementById("progress");
+ const status=document.getElementById("status");
+
+ scan.style.display="block";
+ line.style.display="block";
+ status.textContent="IMBASAN SEDANG BERJALAN...";
+
+ const timer=setInterval(()=>{
+  p+=5;
+  progress.style.width=p+"%";
+
+  if(p>=100){
    clearInterval(timer);
-   document.getElementById("main").style.display="none";
-   document.getElementById("ending").style.display="block";
-   phone.classList.remove("glitch");
-   phone.classList.add("red");
-   beep(850,.3);
+   sedang=false;
+   scan.style.display="none";
+   line.style.display="none";
+
+   status.innerHTML=j===5
+   ?"✓ PROFIL "+aktif+" SELESAI<br>5/5 DIPERIKSA"
+   :"PROFIL "+aktif+" BELUM LENGKAP<br>"+j+"/5 DIPERIKSA";
   }
- },1000);
-};
+ },100);
+}
+
+papar();
+dashboard();
 </script>
 </body>
 </html>
