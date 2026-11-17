@@ -2,800 +2,370 @@
 <html lang="ms">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CHAT STATUS</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+html,body{
+ margin:0;min-height:100%;background:#000;color:white;
+ font-family:Arial,sans-serif
 }
-
-:root {
-  --green: #00ff62;
-  --green2: #00c94d;
-  --red: #ff252c;
-  --black: #020403;
+body{
+ min-height:100vh;display:flex;justify-content:center;
+ align-items:center;padding:10px;overflow-x:hidden
 }
-
-html, body {
-  margin: 0;
-  width: 100%;
-  min-height: 100%;
-  background: #000;
-  font-family: Arial, Helvetica, sans-serif;
-  color: white;
+.phone{
+ width:min(100%,410px);min-height:880px;position:relative;
+ overflow:hidden;padding:15px;
+ background:
+ radial-gradient(ellipse at 50% 10%,#003b17,transparent 45%),
+ radial-gradient(ellipse at 50% 80%,#00200c,transparent 50%),
+ #010302;
+ clip-path:polygon(22px 0,calc(100% - 22px) 0,100% 22px,
+ 100% calc(100% - 22px),calc(100% - 22px) 100%,22px 100%,
+ 0 calc(100% - 22px),0 22px);
 }
-
-body {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 12px 7px;
-  overflow-x: hidden;
+.phone:before{
+ content:"";position:absolute;inset:7px;z-index:8;
+ border:2px solid #00ff58;pointer-events:none;
+ clip-path:inherit;
+ box-shadow:0 0 12px #00ff58,inset 0 0 15px #00ff5830
 }
-
-/* ===== PHONE FRAME ===== */
-
-.phone {
-  width: min(100%, 410px);
-  min-height: 880px;
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  padding: 15px 15px 17px;
-  background:
-    radial-gradient(ellipse at 50% 8%, rgba(0,255,70,.13), transparent 38%),
-    radial-gradient(ellipse at 50% 80%, rgba(0,255,50,.07), transparent 45%),
-    #010302;
-  clip-path: polygon(
-    22px 0, calc(100% - 22px) 0,
-    100% 22px, 100% calc(100% - 22px),
-    calc(100% - 22px) 100%, 22px 100%,
-    0 calc(100% - 22px), 0 22px
-  );
+.noise,.glitch,.scan{
+ position:absolute;inset:0;pointer-events:none
 }
-
-/* Green neon frame */
-.phone::before {
-  content: "";
-  position: absolute;
-  inset: 7px;
-  z-index: 5;
-  pointer-events: none;
-  border: 2px solid #00ff58;
-  clip-path: polygon(
-    22px 0, calc(100% - 22px) 0,
-    100% 22px, 100% calc(100% - 22px),
-    calc(100% - 22px) 100%, 22px 100%,
-    0 calc(100% - 22px), 0 22px
-  );
-  box-shadow:
-    0 0 8px #00ff58,
-    0 0 20px rgba(0,255,80,.75),
-    inset 0 0 15px rgba(0,255,80,.15);
+.noise{
+ background:repeating-linear-gradient(0deg,transparent 0 5px,
+ #00ff4510 6px,transparent 7px);
+ opacity:.8
 }
-
-/* ===== DIGITAL BACKGROUND ===== */
-
-.noise {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  opacity: .55;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      transparent 0px,
-      transparent 5px,
-      rgba(0,255,65,.055) 6px,
-      transparent 7px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent 0px,
-      transparent 25px,
-      rgba(0,255,50,.025) 26px,
-      transparent 27px
-    );
+.glitch{
+ background:
+ linear-gradient(90deg,transparent 3%,#00ff45 4%,transparent 18%) 0 15%/100% 3px no-repeat,
+ linear-gradient(90deg,transparent 65%,red 66%,transparent 94%) 0 20%/100% 4px no-repeat,
+ linear-gradient(90deg,#00ff45,transparent 30%) 0 28%/100% 4px no-repeat,
+ linear-gradient(90deg,transparent 4%,red 5%,transparent 35%) 0 47%/100% 4px no-repeat,
+ linear-gradient(90deg,transparent 60%,#00ff45 61%,transparent 95%) 0 67%/100% 4px no-repeat,
+ linear-gradient(90deg,red,transparent 30%) 0 85%/100% 3px no-repeat;
+ filter:drop-shadow(0 0 5px #00ff45)
 }
-
-.glitch-field {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background:
-    linear-gradient(90deg, transparent 3%, #00ff45 3.5%, transparent 14%) 0 16% / 100% 3px no-repeat,
-    linear-gradient(90deg, transparent 70%, #ff1717 70.5%, transparent 96%) 0 19% / 100% 4px no-repeat,
-    linear-gradient(90deg, #00ff45, transparent 23%) 0 27% / 100% 5px no-repeat,
-    linear-gradient(90deg, transparent 4%, #ff2020 4.5%, transparent 30%) 0 46% / 100% 4px no-repeat,
-    linear-gradient(90deg, transparent 65%, #00ff4c 65.5%, transparent 94%) 0 52% / 100% 5px no-repeat,
-    linear-gradient(90deg, #ff1616, transparent 28%) 0 70% / 100% 4px no-repeat,
-    linear-gradient(90deg, transparent 60%, #00ff42 60.5%, transparent 95%) 0 88% / 100% 4px no-repeat;
-  filter: drop-shadow(0 0 5px #00ff45);
+.scan{
+ background:repeating-linear-gradient(0deg,transparent 0 3px,
+ #00ff5015 4px,transparent 5px);opacity:.6
 }
-
-.glitch-field::before,
-.glitch-field::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    repeating-linear-gradient(
-      90deg,
-      transparent 0 38px,
-      rgba(0,255,60,.2) 39px 41px,
-      transparent 42px 65px
-    );
-  mask-image: repeating-linear-gradient(
-    0deg,
-    black 0 2px,
-    transparent 3px 12px
-  );
+.stripe{
+ position:absolute;left:0;width:100%;height:14px;
+ background:repeating-linear-gradient(125deg,
+ transparent 0 12px,#00ff52 13px 25px,
+ transparent 26px 36px,#ff2020 37px 49px,transparent 50px 62px);
+ z-index:2;filter:drop-shadow(0 0 5px #00ff48)
 }
-
-.glitch-field::after {
-  transform: translateX(8px);
-  opacity: .4;
-  background:
-    repeating-linear-gradient(
-      90deg,
-      transparent 0 60px,
-      rgba(255,0,0,.35) 61px 64px,
-      transparent 65px 90px
-    );
+.top{top:0}.bottom{bottom:0}
+.content{
+ position:relative;z-index:3;min-height:850px;
+ display:flex;flex-direction:column;align-items:center;
+ text-align:center;padding:10px 8px 18px
 }
-
-.scanlines {
-  position: absolute;
-  inset: 0;
-  z-index: 8;
-  pointer-events: none;
-  opacity: .17;
-  background: repeating-linear-gradient(
-    to bottom,
-    transparent 0 3px,
-    rgba(0,255,80,.18) 4px,
-    transparent 5px
-  );
+.brand{display:flex;flex-direction:column;align-items:center}
+.brand img{
+ width:78px;height:78px;filter:drop-shadow(0 0 9px #00ff60)
 }
-
-/* ===== TOP AND BOTTOM WARNING STRIPES ===== */
-
-.stripes {
-  position: absolute;
-  height: 16px;
-  width: 100%;
-  left: 0;
-  z-index: 2;
-  background: repeating-linear-gradient(
-    125deg,
-    transparent 0 12px,
-    #00ff52 13px 25px,
-    transparent 26px 36px,
-    #ff2020 37px 49px,
-    transparent 50px 62px
-  );
-  opacity: .8;
-  filter: drop-shadow(0 0 6px #00ff48);
+.brand-name{
+ color:#00ef60;font-size:27px;font-weight:900;
+ text-shadow:0 0 8px #00ff55,0 0 18px #00ff55
 }
-
-.stripes.top {
-  top: 0;
+.title{
+ margin:13px 0 0;color:#00ff60;
+ font-size:clamp(34px,10vw,46px);
+ font-weight:900;letter-spacing:3px;
+ text-shadow:0 0 8px #00ff60,0 0 25px #00ff60
 }
-
-.stripes.bottom {
-  bottom: 0;
+.required{
+ color:#ff292f;font-size:21px;font-weight:900;
+ letter-spacing:5px;margin-top:13px;
+ text-shadow:0 0 8px red,0 0 18px red
 }
-
-/* ===== MAIN CONTENT ===== */
-
-.content {
-  position: relative;
-  z-index: 3;
-  min-height: 850px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 10px 8px 16px;
+.description{
+ color:#00f46a;font-size:13px;line-height:1.5;
+ margin:10px 0 0;text-shadow:0 0 8px #00ff58
 }
-
-/* WhatsApp logo */
-.brand {
-  margin-top: 5px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.timer{
+ margin-top:8px;color:#ff292f;font-size:65px;
+ font-weight:900;text-shadow:0 0 8px red,0 0 25px red
 }
-
-.brand img {
-  width: 82px;
-  height: 82px;
-  object-fit: contain;
-  filter:
-    drop-shadow(0 0 5px #00ff63)
-    drop-shadow(0 0 14px #00ff63);
+.progress-wrap{
+ width:100%;height:24px;border:2px solid #00ff60;
+ border-radius:5px;padding:3px;margin-top:8px;
+ box-shadow:0 0 8px #00ff60
 }
-
-.brand-name {
-  font-size: 27px;
-  font-weight: 800;
-  color: #00ed63;
-  margin-top: 2px;
-  text-shadow:
-    0 0 7px #00ff55,
-    0 0 18px #00ff55;
+.progress-fill{
+ height:100%;width:0%;
+ background:linear-gradient(90deg,red,#ffb000,#eaff00,#00ff54);
+ transition:width .3s;box-shadow:0 0 10px #00ff55
 }
-
-.unofficial {
-  margin-top: 5px;
-  font-size: 8px;
-  letter-spacing: 2px;
-  color: #69ff9a;
-  opacity: .85;
+.percent{font-size:19px;margin-top:7px}
+.input-title{
+ margin-top:15px;color:#ff3037;font-size:20px;
+ font-weight:900;text-shadow:0 0 8px red
 }
-
-/* Main title */
-.title {
-  margin: 12px 0 0;
-  font-size: clamp(35px, 10vw, 47px);
-  font-weight: 900;
-  letter-spacing: 4px;
-  line-height: 1.05;
-  color: #00ff60;
-  text-shadow:
-    0 0 5px #00ff60,
-    0 0 14px #00ff60,
-    0 0 30px rgba(0,255,70,.8);
+.phone-input{
+ width:100%;height:53px;margin-top:12px;
+ border:2px solid #00ff62;border-radius:8px;
+ background:#001407;color:white;text-align:center;
+ font-size:21px;outline:none;
+ box-shadow:0 0 9px #00ff6060
 }
-
-.required {
-  color: #ff3038;
-  font-size: 22px;
-  font-weight: 900;
-  letter-spacing: 6px;
-  margin-top: 13px;
-  text-shadow:
-    0 0 7px red,
-    0 0 17px red;
+.phone-input::placeholder{color:#858585}
+.continue{
+ width:60%;height:50px;margin-top:15px;
+ border:2px solid #00ff62;border-radius:8px;
+ background:#001407;color:#00ff62;
+ font-size:20px;font-weight:900;letter-spacing:3px;
+ text-shadow:0 0 8px #00ff62;cursor:pointer;
+ box-shadow:0 0 10px #00ff6060
 }
-
-.description {
-  color: #00f46a;
-  font-size: 14px;
-  line-height: 1.4;
-  margin: 10px 0 0;
-  text-shadow: 0 0 8px #00ff58;
+.continue:disabled{opacity:.35;cursor:not-allowed}
+.terminal{
+ width:100%;min-height:120px;margin-top:15px;
+ padding:9px;border:1px solid #00ff62;
+ background:#000b04;text-align:left;overflow:hidden
 }
-
-/* ===== COUNTDOWN ===== */
-
-.timer {
-  margin-top: 8px;
-  color: #ff292f;
-  font-size: 65px;
-  font-weight: 900;
-  line-height: 1.1;
-  text-shadow:
-    0 0 7px red,
-    0 0 18px red,
-    0 0 35px rgba(255,0,0,.8);
+.terminal-line{
+ color:#00ff62;font: bold 11px/1.5 "Courier New",monospace;
+ text-shadow:0 0 5px #00ff62;white-space:normal;
+ overflow-wrap:anywhere
 }
-
-/* ===== PROGRESS ===== */
-
-.progress-wrap {
-  width: 100%;
-  height: 25px;
-  border: 2px solid #00ff60;
-  border-radius: 7px;
-  padding: 3px;
-  margin-top: 8px;
-  box-shadow:
-    0 0 7px rgba(0,255,80,.8),
-    inset 0 0 8px rgba(0,255,80,.3);
+.status{
+ min-height:24px;margin-top:9px;color:#ff3037;
+ font:bold 12px "Courier New",monospace;
+ text-shadow:0 0 8px red
 }
-
-.progress-fill {
-  width: 0%;
-  height: 100%;
-  border-radius: 2px;
-  background: linear-gradient(
-    90deg,
-    #ff1717 0%,
-    #ff4b16 22%,
-    #dfff00 55%,
-    #00ff54 100%
-  );
-  box-shadow: 0 0 10px #00ff55;
-  transition: width .4s linear;
+.shake{animation:shake .3s linear}
+@keyframes shake{
+ 0%,100%{transform:translateX(0)}
+ 20%{transform:translateX(-6px)}
+ 40%{transform:translateX(6px)}
+ 60%{transform:translateX(-5px)}
+ 80%{transform:translateX(5px)}
 }
-
-.percent {
-  font-size: 20px;
-  color: white;
-  margin-top: 7px;
+.flash{animation:flash .2s steps(2) 2}
+@keyframes flash{
+ 50%{background:#4b0000}
 }
-
-/* ===== INPUT ===== */
-
-.input-title {
-  margin-top: 15px;
-  color: #ff3037;
-  font-size: 22px;
-  font-weight: 900;
-  text-shadow:
-    0 0 7px red,
-    0 0 16px red;
+.final{
+ position:absolute;inset:0;z-index:7;display:none;
+ flex-direction:column;align-items:center;justify-content:center;
+ background:#000;text-align:center;padding:20px
 }
-
-.phone-input {
-  width: 100%;
-  height: 55px;
-  margin-top: 13px;
-  border: 2px solid #00ff62;
-  border-radius: 10px;
-  outline: none;
-  background: rgba(0,20,8,.8);
-  color: #fff;
-  text-align: center;
-  font-size: 21px;
-  box-shadow:
-    0 0 8px rgba(0,255,80,.6),
-    inset 0 0 12px rgba(0,255,80,.08);
+.final.show{display:flex;animation:appear .7s}
+@keyframes appear{from{opacity:0}to{opacity:1}}
+.final h1{
+ color:#ff202a;font-size:48px;font-weight:1000;
+ text-shadow:0 0 10px red,0 0 30px red;
+ animation:pulse .5s infinite alternate
 }
-
-.phone-input::placeholder {
-  color: #858585;
+.final h2{
+ color:#00ff62;font-size:27px;
+ text-shadow:0 0 10px #00ff62
 }
-
-.phone-input:focus {
-  box-shadow:
-    0 0 10px #00ff60,
-    0 0 22px rgba(0,255,80,.5);
-}
-
-.continue {
-  width: 58%;
-  height: 51px;
-  margin-top: 16px;
-  border: 2px solid #00ff62;
-  border-radius: 10px;
-  background: rgba(0,20,8,.8);
-  color: #00ff62;
-  font-size: 21px;
-  font-weight: 900;
-  letter-spacing: 3px;
-  cursor: pointer;
-  text-shadow: 0 0 8px #00ff62;
-  box-shadow:
-    0 0 9px rgba(0,255,80,.65),
-    inset 0 0 10px rgba(0,255,80,.1);
-}
-
-.continue:active {
-  background: rgba(0,255,70,.25);
-  transform: scale(.97);
-}
-
-/* ===== TERMINAL ===== */
-
-.terminal {
-  width: 100%;
-  min-height: 120px;
-  margin-top: 16px;
-  padding: 9px 10px;
-  border: 1px solid #00ff62;
-  border-radius: 4px;
-  background: rgba(0,10,4,.88);
-  text-align: left;
-  overflow: hidden;
-  box-shadow: 0 0 8px rgba(0,255,70,.25);
-}
-
-.terminal-line {
-  color: #00ff62;
-  font-family: "Courier New", monospace;
-  font-size: 12px;
-  font-weight: bold;
-  line-height: 1.42;
-  white-space: nowrap;
-  text-shadow: 0 0 5px #00ff62;
-}
-
-/* ===== ERROR EFFECTS ===== */
-
-.error-flash {
-  animation: redflash .18s steps(2) 2;
-}
-
-@keyframes redflash {
-  0% { background-color: transparent; }
-  50% { background-color: rgba(255,0,0,.24); }
-  100% { background-color: transparent; }
-}
-
-.shake {
-  animation: shake .35s linear;
-}
-
-@keyframes shake {
-  0%,100% { transform: translateX(0); }
-  15% { transform: translateX(-5px); }
-  30% { transform: translateX(5px); }
-  45% { transform: translateX(-7px); }
-  60% { transform: translateX(7px); }
-  75% { transform: translateX(-4px); }
-}
-
-.broken {
-  animation: broken .5s steps(2) infinite;
-  filter: contrast(1.5) saturate(1.5);
-}
-
-@keyframes broken {
-  0% { transform: translate(0,0); }
-  25% { transform: translate(2px,-1px); }
-  50% { transform: translate(-2px,1px); }
-  75% { transform: translate(1px,2px); }
-  100% { transform: translate(0,0); }
-}
-
-.glitch-overlay {
-  display: none;
-  position: absolute;
-  inset: 0;
-  z-index: 10;
-  pointer-events: none;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      transparent 0 12px,
-      rgba(255,0,0,.5) 13px 15px,
-      transparent 16px 27px
-    ),
-    linear-gradient(90deg,
-      transparent 0 15%,
-      rgba(255,0,0,.3) 16% 20%,
-      transparent 21% 65%,
-      rgba(0,255,80,.25) 66% 70%,
-      transparent 71%
-    );
-}
-
-.phone.final-broken .glitch-overlay {
-  display: block;
-}
-
-.hidden {
-  display: none !important;
-}
-
-.status-message {
-  min-height: 18px;
-  margin-top: 8px;
-  color: #ff333a;
-  font-family: "Courier New", monospace;
-  font-size: 11px;
-  font-weight: bold;
-  text-shadow: 0 0 8px red;
-}
-
-/* Small screen fit */
-@media (max-width: 380px) {
-  .phone {
-    min-height: 850px;
-  }
-
-  .content {
-    min-height: 820px;
-    padding-left: 6px;
-    padding-right: 6px;
-  }
-
-  .required {
-    font-size: 19px;
-    letter-spacing: 4px;
-  }
-
-  .description {
-    font-size: 12px;
-  }
-
-  .input-title {
-    font-size: 19px;
-  }
-
-  .terminal-line {
-    font-size: 10px;
-  }
+@keyframes pulse{to{transform:scale(1.06)}}
+.final p{color:white;font-size:15px}
+@media(max-width:380px){
+ .phone{min-height:850px}
+ .content{min-height:820px}
+ .required{font-size:18px;letter-spacing:3px}
+ .terminal-line{font-size:10px}
 }
 </style>
 </head>
 
 <body>
-
 <div class="phone" id="phone">
+ <div class="noise"></div>
+ <div class="glitch"></div>
+ <div class="scan"></div>
+ <div class="stripe top"></div>
+ <div class="stripe bottom"></div>
 
-  <div class="noise"></div>
-  <div class="glitch-field"></div>
-  <div class="scanlines"></div>
-  <div class="stripes top"></div>
-  <div class="stripes bottom"></div>
-  <div class="glitch-overlay"></div>
+ <main class="content">
+  <div class="brand">
+   <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+   <div class="brand-name">WhatsApp</div>
+  </div>
 
-  <main class="content">
+  <h1 class="title">CHAT STATUS</h1>
+  <div class="required">• INPUT REQUIRED •</div>
 
-    <div class="brand">
-      <img
-        src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-        alt="WhatsApp"
-      >
-      <div class="brand-name">WhatsApp</div>
-      <div class="unofficial">DEMO TIDAK RASMI</div>
-    </div>
+  <p class="description">
+   Pemeriksaan memerlukan input untuk meneruskan paparan.
+  </p>
 
-    <h1 class="title">CHAT STATUS</h1>
+  <div class="timer" id="timer">10</div>
 
-    <div class="required">• INPUT REQUIRED •</div>
+  <div class="progress-wrap">
+   <div class="progress-fill" id="progress"></div>
+  </div>
+  <div class="percent" id="percent">0%</div>
 
-    <p class="description">
-      Pemeriksaan memerlukan input untuk meneruskan paparan.
-    </p>
+  <div class="input-title">MASUKKAN NOMBOR TELEFON</div>
+  <input class="phone-input" id="number" type="tel"
+   inputmode="numeric" maxlength="11"
+   placeholder="NOMBOR TELEFON" disabled>
 
-    <div class="timer" id="timer">10</div>
+  <button class="continue" id="button" disabled>TERUSKAN</button>
 
-    <div class="progress-wrap">
-      <div class="progress-fill" id="progress"></div>
-    </div>
+  <div class="status" id="status">WAITING FOR INPUT...</div>
 
-    <div class="percent" id="percent">0%</div>
+  <div class="terminal" id="terminal">
+   <div class="terminal-line">&gt; WAITING FOR START COMMAND...</div>
+   <div class="terminal-line">&gt; CHECKING RESPONSE...</div>
+   <div class="terminal-line">&gt; SCANNING INTERFACE...</div>
+   <div class="terminal-line">&gt; WARNING: SIGNAL UNSTABLE</div>
+   <div class="terminal-line">&gt; WAITING FOR PHONE FORMAT INPUT</div>
+  </div>
+ </main>
 
-    <div class="input-title">MASUKKAN NOMBOR TELEFON</div>
-
-    <input
-      class="phone-input"
-      id="phoneNumber"
-      type="tel"
-      inputmode="numeric"
-      maxlength="11"
-      placeholder="NOMBOR PAPARAN"
-      autocomplete="off"
-    >
-
-    <button class="continue" id="continueBtn" disabled>
-      TERUSKAN
-    </button>
-
-    <div class="status-message" id="statusMessage">
-      MENUNGGU INPUT
-    </div>
-
-    <div class="terminal" id="terminal">
-      <div class="terminal-line">&gt; WAITING FOR START COMMAND...</div>
-      <div class="terminal-line">&gt; CHECKING RESPONSE...</div>
-      <div class="terminal-line">&gt; SCANNING INTERFACE...</div>
-      <div class="terminal-line">&gt; WARNING: SIGNAL UNSTABLE</div>
-      <div class="terminal-line">&gt; WAITING FOR PHONE FORMAT INPUT</div>
-    </div>
-
-  </main>
+ <div class="final" id="final">
+  <h1>PRANK!!!</h1>
+  <h2>APA KAU TUNGGU 🤣</h2>
+  <p>SEMUA INI HANYALAH GURAUAN!</p>
+ </div>
 </div>
 
 <script>
-const phone = document.getElementById("phone");
-const timer = document.getElementById("timer");
-const progress = document.getElementById("progress");
-const percent = document.getElementById("percent");
-const input = document.getElementById("phoneNumber");
-const button = document.getElementById("continueBtn");
-const terminal = document.getElementById("terminal");
-const statusMessage = document.getElementById("statusMessage");
+const $=id=>document.getElementById(id);
+const phone=$("phone");
+const timer=$("timer");
+const progress=$("progress");
+const percent=$("percent");
+const number=$("number");
+const button=$("button");
+const status=$("status");
+const terminal=$("terminal");
 
-let stage = "initial";
-let seconds = 10;
-let errorInterval = null;
-let soundContext = null;
+let stage="initial";
+let audio=null;
+let errorTimer=null;
 
-const messages = [
-  "ERROR: SIGNAL UNSTABLE",
-  "WARNING: RESPONSE DELAY",
-  "ERROR: INTERFACE INTERRUPTED",
-  "WARNING: CONNECTION LOST",
-  "ERROR: DISPLAY FAILURE",
-  "WARNING: SYSTEM RESPONSE FAILED",
-  "ERROR: PROCESS INTERRUPTED"
+function sound(){
+ try{
+  if(!audio) audio=new(window.AudioContext||window.webkitAudioContext)();
+  if(audio.state==="suspended")audio.resume();
+
+  [190,90,260,65].forEach((freq,i)=>{
+   const osc=audio.createOscillator();
+   const gain=audio.createGain();
+   const start=audio.currentTime+i*.055;
+   osc.type="square";
+   osc.frequency.setValueAtTime(freq,start);
+   gain.gain.setValueAtTime(.13,start);
+   gain.gain.exponentialRampToValueAtTime(.001,start+.12);
+   osc.connect(gain);gain.connect(audio.destination);
+   osc.start(start);osc.stop(start+.13);
+  });
+ }catch(e){}
+}
+
+function vibrate(){
+ if(navigator.vibrate)navigator.vibrate([180,60,180,60,240]);
+}
+
+function line(text){
+ const el=document.createElement("div");
+ el.className="terminal-line";
+ el.textContent="> "+text;
+ terminal.appendChild(el);
+ while(terminal.children.length>8)terminal.firstChild.remove();
+}
+
+function setProgress(v){
+ progress.style.width=v+"%";
+ percent.textContent=Math.round(v)+"%";
+}
+
+function countdown(duration,done){
+ let left=duration;
+ timer.textContent=left;
+ setProgress(0);
+ const id=setInterval(()=>{
+  left--;
+  timer.textContent=left;
+  setProgress((duration-left)/duration*100);
+  if(left<=0){
+   clearInterval(id);
+   done();
+  }
+ },1000);
+}
+
+countdown(10,()=>{
+ stage="ready";
+ number.disabled=false;
+ button.disabled=false;
+ timer.textContent="00";
+ status.textContent="INPUT REQUIRED";
+ line("INPUT INTERFACE READY");
+});
+
+number.addEventListener("input",()=>{
+ number.value=number.value.replace(/\D/g,"").slice(0,11);
+ button.disabled=!(stage==="ready"&&number.value.length>=10);
+});
+
+const errors=[
+ "ERROR: SIGNAL UNSTABLE",
+ "WARNING: RESPONSE DELAY",
+ "ERROR: INTERFACE INTERRUPTED",
+ "WARNING: CONNECTION LOST",
+ "ERROR: DISPLAY FAILURE",
+ "NOMBOR DIAMBIL ALIH",
+ "WARNING: SYSTEM RESPONSE FAILED",
+ "ERROR: PROCESS INTERRUPTED",
+ "NOMBOR DIAMBIL ALIH",
+ "CRITICAL: STATUS ERROR"
 ];
 
-/* Sound starts only after button interaction */
-function playErrorSound() {
-  try {
-    if (!soundContext) {
-      soundContext = new (
-        window.AudioContext || window.webkitAudioContext
-      )();
-    }
-
-    if (soundContext.state === "suspended") {
-      soundContext.resume();
-    }
-
-    const oscillator = soundContext.createOscillator();
-    const gain = soundContext.createGain();
-
-    oscillator.type = "square";
-    oscillator.frequency.setValueAtTime(
-      170,
-      soundContext.currentTime
-    );
-
-    oscillator.frequency.exponentialRampToValueAtTime(
-      65,
-      soundContext.currentTime + .16
-    );
-
-    gain.gain.setValueAtTime(.12, soundContext.currentTime);
-    gain.gain.exponentialRampToValueAtTime(
-      .001,
-      soundContext.currentTime + .19
-    );
-
-    oscillator.connect(gain);
-    gain.connect(soundContext.destination);
-
-    oscillator.start();
-    oscillator.stop(soundContext.currentTime + .2);
-
-  } catch (e) {}
+function errorEffect(){
+ const msg=errors[Math.floor(Math.random()*errors.length)];
+ status.textContent=msg;
+ line(msg);
+ phone.classList.remove("shake","flash");
+ void phone.offsetWidth;
+ phone.classList.add("shake","flash");
+ sound();
+ vibrate();
 }
 
-function vibrateDevice() {
-  if ("vibrate" in navigator) {
-    navigator.vibrate([180, 70, 180]);
-  }
-}
+button.addEventListener("click",()=>{
+ if(stage!=="ready"||number.value.length<10)return;
 
-function addTerminalLine(message) {
-  const line = document.createElement("div");
-  line.className = "terminal-line";
-  line.textContent = "> " + message;
+ stage="processing";
+ number.disabled=true;
+ button.disabled=true;
 
-  terminal.appendChild(line);
+ line("INPUT RECEIVED LOCALLY");
+ line("STARTING PROCESS...");
+ status.textContent="PROCESSING...";
 
-  while (terminal.children.length > 7) {
-    terminal.removeChild(terminal.firstChild);
-  }
-}
+ errorTimer=setInterval(errorEffect,900);
 
-function updateProgress(value) {
-  const safeValue = Math.max(0, Math.min(100, value));
-  progress.style.width = safeValue + "%";
-  percent.textContent = Math.round(safeValue) + "%";
-}
-
-function initialCountdown() {
-  timer.textContent = seconds;
-
-  const countdown = setInterval(() => {
-    seconds--;
-    timer.textContent = seconds;
-
-    updateProgress(((10 - seconds) / 10) * 100);
-
-    if (seconds <= 0) {
-      clearInterval(countdown);
-
-      timer.textContent = "00";
-      updateProgress(100);
-
-      stage = "ready";
-      input.disabled = false;
-      button.disabled = false;
-      button.style.opacity = "1";
-
-      statusMessage.textContent = "INPUT DIPERLUKAN";
-      addTerminalLine("INPUT INTERFACE READY");
-      input.focus();
-    }
-  }, 1000);
-}
-
-/* Initial state */
-input.disabled = true;
-button.disabled = true;
-button.style.opacity = ".4";
-
-initialCountdown();
-
-/* Enable button when digits are entered */
-input.addEventListener("input", () => {
-  input.value = input.value.replace(/\D/g, "").slice(0, 11);
-
-  button.disabled =
-    !(stage === "ready" && input.value.length >= 10);
-});
-
-/* Error animation */
-function triggerError() {
-  const message =
-    messages[Math.floor(Math.random() * messages.length)];
-
-  statusMessage.textContent = message;
-  addTerminalLine(message);
-
-  phone.classList.remove("shake");
-  void phone.offsetWidth;
-  phone.classList.add("shake");
-
-  phone.classList.add("error-flash");
-  setTimeout(() => {
-    phone.classList.remove("error-flash");
-  }, 400);
-
-  playErrorSound();
-  vibrateDevice();
-}
-
-/* Second 30-second sequence */
-function startSecondSequence() {
-  stage = "processing";
-  input.disabled = true;
-  button.disabled = true;
-
-  seconds = 30;
-  timer.textContent = seconds;
-  updateProgress(0);
-
-  statusMessage.textContent = "PROCESSING DISPLAY...";
-  addTerminalLine("PROCESS STARTED");
-
-  let elapsed = 0;
-
-  errorInterval = setInterval(() => {
-    triggerError();
-  }, 1450);
-
-  const countdown = setInterval(() => {
-    seconds--;
-    elapsed++;
-
-    timer.textContent = seconds;
-    updateProgress((elapsed / 30) * 100);
-
-    if (seconds <= 0) {
-      clearInterval(countdown);
-      clearInterval(errorInterval);
-
-      timer.textContent = "00";
-      updateProgress(100);
-
-      stage = "finished";
-      phone.classList.add("final-broken");
-      phone.classList.add("broken");
-
-      statusMessage.textContent = "DISPLAY FAILURE";
-      addTerminalLine("DISPLAY INTERRUPTED");
-      addTerminalLine("PROCESS TERMINATED");
-
-      triggerError();
-    }
-  }, 1000);
-}
-
-button.addEventListener("click", () => {
-  if (stage !== "ready") return;
-  if (input.value.length < 10) return;
-
-  playErrorSound();
-  vibrateDevice();
-
-  addTerminalLine("INPUT RECEIVED LOCALLY");
-  startSecondSequence();
+ countdown(30,()=>{
+  clearInterval(errorTimer);
+  stage="finished";
+  timer.textContent="00";
+  setProgress(100);
+  status.textContent="PROCESS COMPLETE";
+  line("PROCESS FINISHED");
+  line("DISPLAY INTERRUPTED");
+  errorEffect();
+  setTimeout(()=>{
+   $("final").classList.add("show");
+   sound();
+   vibrate();
+  },600);
+ });
 });
 </script>
-
 </body>
 </html>
